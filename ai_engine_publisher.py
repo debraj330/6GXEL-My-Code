@@ -5,7 +5,7 @@ import json
 import paho.mqtt.client as mqtt
 
 BROKER = "localhost"
-TOPICS = ["Hello 6GXCEL", ...., "topic/3"]  # AI apps publish to various topics
+TOPICS = ["topic/1", "topic/2", "topic/3"]  # AI apps publish to various topics
 
 client = mqtt.Client("AI_Engine_Publisher")
 client.connect(BROKER, 1883)
