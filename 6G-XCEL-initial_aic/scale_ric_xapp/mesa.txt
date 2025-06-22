@@ -1,0 +1,1000 @@
+  662  make
+  663  make install
+  664  srsenb
+  665  cd ..
+  666  ls
+  667  cd scale_ric_xapp/
+  668  ls
+  669  vim xApp.py 
+  670  ifconfig
+  671  vim /etc/ssh/ssh_config
+  672  vim /etc/ssh/sshd_config
+  673  sudo service ssh restart
+  674  ls
+  675  cd ..
+  676  ls
+  677  unzip help.zip 
+  678  cd help
+  679  ls
+  680  vim publisher.cpp 
+  681  head publisher.cpp 
+  682  g++ publisher.cpp -o a -lzmq
+  683  ls
+  684  ./a
+  685  vim recv.cpp 
+  686  rm recv
+  687  rm pub
+  688  rm a
+  689  g++ publisher.cpp -o pub -lzmq
+  690  g++ publisher.cpp -o recv -lzmq
+  691  ./pub 
+  692  vim publisher.cpp 
+  693  ./pub 
+  694  vim publisher.cpp 
+  695  g++ publisher.cpp -o pub -lzmq
+  696  ./pub 
+  697  ls
+  698  vim recv.py 
+  699  cp recv.py ../scale_ric_xapp/
+  700  ./pub 
+  701  vim producer.py 
+  702  cd ..
+  703  mkdir prod
+  704  cp -r scale_ric_xapp/* prod/
+  705  cp help/producer.py prod/
+  706  cd prod/
+  707  ls
+  708  vim producer.py 
+  709  vim docker-compose.yml 
+  710  docker-compose up
+  711  vim docker-compose.yml 
+  712  docker-compose up
+  713  vim producer.py 
+  714  docker-compose up
+  715  ls
+  716  cd ..
+  717  ls
+  718  cd help
+  719  ls
+  720  vim publisher.cpp producer.py 
+  721  g++ publisher.cpp -o pub -lzmq
+  722  ./pub 
+  723  vim publisher.cpp 
+  724  g++ publisher.cpp -o pub -lzmq
+  725  rm pub
+  726  g++ publisher.cpp -o pub -lzmq
+  727  ./pub 
+  728  vim publisher.cpp 
+  729  g++ publisher.cpp -o pub -lzmq
+  730  ./pub 
+  731  ls
+  732  ./pub 
+  733  vim medium_server.cpp 
+  734  vim server.cpp 
+  735  vim ../ORAN_5G_srsRAN/srsenb/src/scale_ric/producer.cc 
+  736  vim producer.py 
+  737  vim publisher.cpp 
+  738  vim ../ORAN_5G_srsRAN/srsenb/src/scale_ric/producer.cc 
+  739  g++ publisher.cpp -o pub -lzmq
+  740  ./pub 
+  741  exit
+  742  ls
+  743  vim Dockerfile 
+  744  srsepc
+  745  ls
+  746  cd ..
+  747  cd ORAN_5G_srsRAN/
+  748  ls
+  749  cd srsenb/
+  750  ls
+  751  cd src/
+  752  ls
+  753  cd scale_ric/
+  754  ls
+  755  vim producer.cc 
+  756  cd
+  757  cd /home/ubuntu/
+  758  ls
+  759  cd scale_ric_xapp/
+  760  vim recv.py 
+  761  cd ..
+  762  cd prod/
+  763  ls
+  764  vim producer.py 
+  765  srsepc
+  766  exit
+  767  cd scale_ric_databus/
+  768  ls
+  769  clear
+  770  vim README.md 
+  771  sudo su 
+  772  exit
+  773  ls
+  774  clear
+  775  ls
+  776  exit
+  777  cd scale_ric_xapp/
+  778  ls
+  779  vim docker-compose.yml 
+  780  cd ..
+  781  ls
+  782  cd scale_ric_xapp/
+  783  ls
+  784  docker ps
+  785  vim docker-compose.yml 
+  786  vim producer.py 
+  787  docker-compose up
+  788  ls
+  789  vim producer.py 
+  790  vim producer_interactive.py
+  791  cp producer.py producer_interactive.py
+  792  vim producer_interactive.py 
+  793  vim docker-compose.yml 
+  794  docker-compose up
+  795  vim docker-compose.yml 
+  796  docker-compose build
+  797  docker-compose up &
+  798  docker attach xapp_producer_good 
+  799  vim docker-compose.yml 
+  800  vim producer_interactive.py 
+  801  docker-compose up &
+  802  docker attach xapp_producer_good 
+  803  vim producer_interactive.py 
+  804  docker ps
+  805  docker-compose up &
+  806  docker attach xapp_producer_good 
+  807  vim producer_interactive.py 
+  808  docker-compose up &
+  809  docker attach xapp_producer_good 
+  810  docker-compose up &
+  811  docker attach xapp_producer_good 
+  812  vim producer_interactive.py 
+  813  docker-compose up &
+  814  docker attach xapp_producer_good 
+  815  exit
+  816  ls
+  817  caddy file-server -browse -listen localhost:8080 -root /bbb/
+  818  ls
+  819  ifconfig
+  820  caddy file-server --listen localhost:8080 --root /bbb/
+  821  caddy file-server --browse --listen localhost:8080 --root /bbb/
+  822  caddy file-server --browse --listen 192.158.52.11:8080 --root /bbb/
+  823  sudo caddy file-server --browse --listen 192.158.52.11:8080 --root /bbb/
+  824  ps -a
+  825  sudo caddy file-server --browse --listen 192.168.52.11:8080 --root /bbb/
+  826  ls
+  827  ls bbb
+  828  ls bbb/x264/bbb/DASH_Files/full/
+  829  sudo caddy file-server --browse --listen 192.168.52.11:8080 --root /bbb/x264/bbb/DASH_Files/full/
+  830  caddy file-server --browse --listen 192.168.52.11:8080 --root /bbb/x264/bbb/DASH_Files/full/
+  831  ls
+  832  cd ORAN_5G_srsRAN/srsenb/src/
+  833  vim main.cc 
+  834  exit
+  835  clear
+  836  ls
+  837  cd scale_ric_databus/
+  838  ls
+  839  docker-compose up
+  840  docker ps
+  841  cd ..
+  842  ls
+  843  vim create_interface.sh 
+  844  ./create_databus_interface.sh 
+  845  vim create_databus_interface.sh 
+  846  vim create_interface.sh 
+  847  ./create_interface.sh 
+  848  ls
+  849  cd scale_ric_databus/
+  850  ls
+  851  docker-compose up
+  852  q
+  853  exit
+  854  ls
+  855  srsenb
+  856  vim /root/.config/srsran/enb.conf 
+  857  srsenb
+  858  q
+  859  exit
+  860  powerstat -D 
+  861  snap install powerstat
+  862  apt install powerstat
+  863  powerstat -D 1 60
+  864  powerstat -D 1 60 | grep 'Watts'
+  865  powerstat -D 1 60
+  866  exit
+  867  srsepc
+  868  exit
+  869  sudo su 
+  870  exit
+  871  caddy file-server --browse --listen 192.168.52.11:8080 --root /home/ubuntu/bbb/
+  872  caddy file-server --browse --listen 192.168.52.11:8080 --root /home/ubuntu/bbb/x264/bbb/DASH_Files/full/
+  873  exit
+  874  wget http://192.168.52.11:8080/bbb_enc_x264_dash.mpd
+  875  exit
+  876  iptables -t nat -A POSTROUTING -s 172.16.0.0/24 -o eth0 -j MASQUERADE
+  877  exit
+  878  sudo su 
+  879  exit
+  880  clear
+  881  tmux
+  882  exit
+  883  echo "performance" | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+  884  exit
+  885  sudo su 
+  886  exit
+  887  ls
+  888  ./create_databus_interface.sh 
+  889  ./create_interface.sh 
+  890  ls
+  891  clear
+  892  srsenb
+  893  vim /root/.config/srsran/
+  894  uit
+  895  shutdown
+  896  ls
+  897  tmux
+  898  iptables -t nat -A POSTROUTING -s 172.16.0.0/24 -o eth0 -j MASQUERADE
+  899  ls
+  900  cd scale_ric_databus/
+  901  ls
+  902  clear
+  903  ls
+  904  docker-compose up
+  905  docker-compose up &
+  906  cd ..
+  907  cd scale_ric_xapp/
+  908  docker-compose up &
+  909  docker ps
+  910  docker attach xapp_producer_good
+  911  docker-compose up &
+  912  docker attach xapp_producer_good
+  913  ls
+  914  vim producer_interactive.py 
+  915  docker-compose up &
+  916  docker attach xapp_producer_good
+  917  srsepc
+  918  sudo su 
+  919  caddy file-server --browse --listen 192.168.52.11:8080 --root /home/ubuntu/bbb/x264/bbb/DASH_Files/full/
+  920  sudo su 
+  921  docker ps
+  922  sudo su 
+  923  apt update
+  924  apt update python3
+  925  apt install python3.9
+  926  python3
+  927  find / -iname python3
+  928  ll /usr/bin/python3
+  929  update-alternatives --config python3
+  930  update-alternatives --config python
+  931  sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+  932  ls /usr/bin/python*
+  933  ll /usr/bin/python*
+  934  update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1
+  935  python3
+  936  update-alternatives --config python3
+  937  python3 --version
+  938  ll /usr/bin/python/*
+  939  ll /usr/bin/python*
+  940  ll /usr/bin/python3*
+  941  cd /usr/bin/
+  942  ll
+  943  cd ~
+  944  ll
+  945  alias python3=python3.9
+  946  python3
+  947  ll /usr/bin/python3*
+  948  update-alternatives --config python3
+  949  python3 -m pip update
+  950  python3 -m pip upgrade
+  951  sudo apt install python3-pip
+  952  pip3 --version
+  953  apt-get install python3-distutils
+  954  apt-get install python3-apt
+  955  python3 -m pip upgrade
+  956  apt install python3.9-distutils
+  957  python3 -m pip upgrade
+  958  python3 -m pip update
+  959  python3 -m pip install automl
+  960  python3 -m pip install auto-sklearn
+  961  sudo apt-get install build-essential swig python3-dev
+  962  mkdir /home/ubuntu/bruno
+  963  cd /home/ubuntu/bruno
+  964  ll
+  965  cd automl/
+  966  ll
+  967  vi autoML.py 
+  968  mv autoML.py autoML2.py
+  969  ll ../
+  970  mv ../autoML.py ./
+  971  ll
+  972  python3 autoML.py 
+  973  python3 -m pip install numpy
+  974  python3 -m pip install numpy --upgrade --ignore-installed
+  975  python3 autoML.py 
+  976  python3 -m pip install scipy --upgrade --ignore-installed
+  977  python3 autoML.py 
+  978  dh
+  979  swapon -s
+  980  free -m
+  981  sudo swapoff -a
+  982  sudo dd if=/dev/zero of=/swapfile bs=1G count=8
+  983  sudo dd if=/dev/zero of=/swapfile bs=1G count=12
+  984  sudo chmod 0600 /swapfile
+  985  sudo mkswap /swapfile 
+  986  sudo swapon /swapfile
+  987  grep Swap /proc/meminfo
+  988  python3 autoML.py 
+  989  /swapfile swap swap sw 0 0
+  990  sudo /swapfile swap swap sw 0 0
+  991  vi /etc/fstab 
+  992  dmesg -T| grep -E -i -B100 'killed process'
+  993  echo "2" > /proc/sys/vm/overcommit_memory
+  994  python3 autoML.py 
+  995  sudo chmod 600 /swapfile
+  996  sudo mkswap /swapfile
+  997  sudo swapon /swapfile
+  998  free -h
+  999  echo 1 > /proc/sys/vm/overcommit_memory
+ 1000  python3 autoML.py 
+ 1001  cd /home/ubuntu/bruno
+ 1002  cd autoML.py 
+ 1003  cd automl/
+ 1004  python3 autoML.py 
+ 1005  tmux ls
+ 1006  tmux new -t n
+ 1007  vi autoML.py 
+ 1008  python3 autoML.py 
+ 1009  vi autoML.py 
+ 1010  python3 autoML.py 
+ 1011  vi autoML.py 
+ 1012  python3 autoML.py 
+ 1013  ll
+ 1014  python3 autoML.py 
+ 1015  python3 --version
+ 1016  sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1
+ 1017  sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.5 2
+ 1018  sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3 2
+ 1019  sudo update-alternatives --config python3
+ 1020  python3 --version
+ 1021  ln -sf /usr/bin/python3.9 /usr/bin/python3 
+ 1022  python3 --version
+ 1023  python3.9 --version
+ 1024  sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 2
+ 1025  sudo update-alternatives --config python3
+ 1026  python3.9 --version
+ 1027  python3 --version
+ 1028  ls /usr/bin/python*
+ 1029  ll /usr/bin/python*
+ 1030  ln -sf /usr/bin/python3.9 /usr/bin/python3 
+ 1031  ll /usr/bin/python*
+ 1032  time
+ 1033  date
+ 1034  python3 --version
+ 1035  rm /usr/bin/python3
+ 1036  ll /usr/bin/python*
+ 1037  python3 --version
+ 1038  find / -iname pytho3
+ 1039  find / -iname python3
+ 1040  which python3
+ 1041  ll /usr/local/bin/python*
+ 1042  ln -sf /usr/bin/python3.9 /usr/local/bin/python3 
+ 1043  which python3
+ 1044  python3 --version
+ 1045  python3 autoML.py 
+ 1046  ll /tmp/
+ 1047  rm /tmp/auto-sklearn_tmp_*
+ 1048  python3 autoML.py 
+ 1049  ll /tmp/
+ 1050  rm /tmp/auto-sklearn_tmp_*
+ 1051  rm -r /tmp/auto-sklearn_tmp_*
+ 1052  python3 autoML.py 
+ 1053  ll /tmp/
+ 1054  rm -r /tmp/autosklearn_classification_example_tmp
+ 1055  ll /tmp/
+ 1056  python3 autoML.py 
+ 1057  ll /tmp/
+ 1058  ll
+ 1059  python3 autoML.py 
+ 1060  ll
+ 1061  python3 autoML.py 
+ 1062  htop
+ 1063  history
+ 1064  history grep more
+ 1065  history | grep more
+ 1066  history |  more
+ 1067  echo 1 > /proc/sys/vm/overcommit_memory
+ 1068  grep Swap /proc/meminfo
+ 1069  python3 autoML.py 
+ 1070  rm -R /tmp/autosklearn_classification_example_tmp_full/
+ 1071  python3 autoML.py 
+ 1072  echo 2 > /proc/sys/vm/overcommit_memory
+ 1073  python3 autoML.py 
+ 1074  sudo fallocate -l 64G /swapfile
+ 1075  sudo chmod 600 /swapfile
+ 1076  sudo mkswap /swapfile
+ 1077  sudo swapon /swapfile
+ 1078  echo 1 > /proc/sys/vm/overcommit_memory
+ 1079  python3 autoML.py 
+ 1080  exit
+ 1081  python3 autoML.py 
+ 1082  cd ../z_day/
+ 1083  python3 svm2.py 
+ 1084  pip3 install matplotlib --force-reinstall
+ 1085  python3 -m pip install matplotlib --force-reinstall
+ 1086  python3 svm2.py 
+ 1087  python3 -m pip install seaborn
+ 1088  python3 svm2.py 
+ 1089  python3 -m pip install deco
+ 1090  python3 svm2.py 
+ 1091  killalll python3
+ 1092  ps ax | grep python3
+ 1093  sudo killall python3
+ 1094  killalll python3
+ 1095  killall python3
+ 1096  ll
+ 1097  ll /tmp/pwd
+ 1098  pwd
+ 1099  ll ~/z_day/model_svm_0.18.sav
+ 1100  killall python3
+ 1101  cd bruno/auto
+ 1102  cd bruno/automl/
+ 1103  ll
+ 1104  python3 autoML.py 
+ 1105  ll
+ 1106  python3 autoML.py 
+ 1107  q
+ 1108  python3 autoML.py 
+ 1109  rm -r /tmp/autosklearn_classification_example_tmp_full
+ 1110  python3 autoML.py 
+ 1111  htop
+ 1112  killall python3
+ 1113  htop
+ 1114  python3
+ 1115  htop
+ 1116  cd ..
+ 1117  cd z_day/
+ 1118  python3 svm2.py 
+ 1119  cp model_pca.sav model_pca_full.sav
+ 1120  ll model_svm_0.152.sav 
+ 1121  ll model_pca*.*
+ 1122  python3 svm2.py 
+ 1123  ll model_pca*.*
+ 1124  cat dataset.py 
+ 1125  python3 svm2.py 
+ 1126  ll model_pca*.*
+ 1127  python3 fw_life_cicle.py 
+ 1128  python3 svm2.py 
+ 1129  python3 fw_life_cicle.py 
+ 1130  chomod 777 ./
+ 1131  chomod 777 ../z_day/
+ 1132  sudo chomod 777 ../z_day/
+ 1133  sudo chmod 777 ../z_day/
+ 1134  rm model_svm_0.152.sav
+ 1135  python3 fw_life_cicle.py 
+ 1136  python3 svm2.py 
+ 1137  python3 fw_life_cicle.py 
+ 1138  python3 svm2.py 
+ 1139  cp model_pca.sav model_pca_.sav
+ 1140  python3 fw_life_cicle.py 
+ 1141  python3 svm2.py 
+ 1142  python3 fw_life_cicle.py 
+ 1143  python3 lof2.py
+ 1144  ls
+ 1145  clear
+ 1146  tmux ls
+ 1147  tmux new -t n
+ 1148  sudo su
+ 1149  echo "nameserver 134.226.32.57" | sudo tee /etc/resolv.conf > /dev/null 
+ 1150  exit
+ 1151  echo "nameserver 134.226.32.57" | sudo tee /etc/resolv.conf > /dev/null 
+ 1152  git clone https://github.com/zeromq/czmq.git 
+ 1153  ifconfig
+ 1154  clear
+ 1155  ifconfig -all
+ 1156  ifconfig -a
+ 1157  ifconfig
+ 1158  CLEAR
+ 1159  clear
+ 1160  lshw
+ 1161  ethtool
+ 1162  lshw
+ 1163  ifconfig
+ 1164  sudo ifconfig enp60s0 down 
+ 1165  sudo ifconfig enp60s0 hw ether 04:69:f8:eb:f0:59
+ 1166  sudo ifconfig enp60s0 up
+ 1167  ifconfig
+ 1168  exit
+ 1169  docker-compose up
+ 1170  docker-compose up &
+ 1171  docker ps
+ 1172  ifconfig
+ 1173  cd ..
+ 1174  ls
+ 1175  vim create_interface.sh 
+ 1176  ./create_interface.sh 
+ 1177  cd scale_ric_databus/
+ 1178  docker-compose up &
+ 1179  docker ps
+ 1180  vim docker-compose.yml 
+ 1181  ifconfig -a
+ 1182  vim docker-compose.yml 
+ 1183  cd ..
+ 1184  ls
+ 1185  vim create_databus_interface.sh 
+ 1186  ./create_databus_interface.sh 
+ 1187  cd scale_ric_databus/
+ 1188  docker-compose up &]
+ 1189  \
+ 1190  docker ps
+ 1191  docker-compose up &
+ 1192  docker ps
+ 1193  cd ..
+ 1194  ls
+ 1195  srsenb
+ 1196  ls
+ 1197  cd ORAN_5G_srsRAN/
+ 1198  git log
+ 1199  git status
+ 1200  apt-get install tig
+ 1201  ls
+ 1202  ifconfig
+ 1203  ls
+ 1204  apt-get install tig
+ 1205  wget www.google.com
+ 1206  apt-get install tig
+ 1207  apt-get install vim
+ 1208  ls
+ 1209  cat .git/config 
+ 1210  cd 
+ 1211  mkdir helphelphelp
+ 1212  cd helphelphelp/
+ 1213  ls
+ 1214  git clone https://github.com/merimdzaferagic/ORAN_5G_srsRAN.git
+ 1215  vim /etc/resolv.conf 
+ 1216  sudo su 
+ 1217  git clone https://github.com/merimdzaferagic/ORAN_5G_srsRAN.git
+ 1218  ifconfig
+ 1219  ls
+ 1220  cd ..
+ 1221  ls
+ 1222  rm -rf helphelphelp/
+ 1223  ls
+ 1224  sudo su 
+ 1225  caddy file-server --browse --listen 192.168.52.11:8080 --root /home/ubuntu/bbb/x264/bbb/DASH_Files/full/
+ 1226  iperf3 -s -p 5001
+ 1227  iperf3 -s 
+ 1228  iperf3 -c 172.16.0.6 -i1 -t60
+ 1229  cd 
+ 1230  ls
+ 1231  cd /home/ubuntu/
+ 1232  ls
+ 1233  ifconfig
+ 1234  ls
+ 1235  cd help
+ 1236  ls
+ 1237  cd ..
+ 1238  ls
+ 1239  mkdir helphelphelp
+ 1240  ls
+ 1241  cd helphelphelp/
+ 1242  ls
+ 1243  git clone https://github.com/zeromq/czmq.git 
+ 1244  ifconfig
+ 1245  history
+ 1246  iperf3 -s -p 1234
+ 1247  srsenb
+ 1248  docker-compose up &
+ 1249  docker ps
+ 1250  docker attach xapp_producer_good
+ 1251  ls
+ 1252  docker ps
+ 1253  ls
+ 1254  cd ORAN_5G_srsRAN/
+ 1255  ls
+ 1256  cd ..
+ 1257  ls
+ 1258  sudo su 
+ 1259  srsepc
+ 1260  ls
+ 1261  cp create_interface.sh create_bc1_interface.sh
+ 1262  vim create_bc1_interface.sh 
+ 1263  ls
+ 1264  ifconfig
+ 1265  ifconfig -a
+ 1266  ./create_bc1_interface.sh 
+ 1267  uhd_find_devices 
+ 1268  ifconfig -a
+ 1269  ifconfig
+ 1270  uhd_find_devices 
+ 1271  ifconfig -a
+ 1272  sudo ifconfig eth15 192.168.10.1/24
+ 1273  uhd_usrp_probe
+ 1274  uhd_find_devices 
+ 1275  ifconfig
+ 1276  ping 192.168.10.1
+ 1277  ping 192.168.10.2
+ 1278  ./create_bc1_interface.sh 
+ 1279  cat create_bc1_interface.sh 
+ 1280  sudo ifconfig eth15 10.55.32.5
+ 1281  ifconfig
+ 1282  sudo ifconfig --help
+ 1283  sudo ifconfig eth15 add arp
+ 1284  sudo ifconfig eth15 arp
+ 1285  ifconfig
+ 1286  uhd_find_devices 
+ 1287  ifconfig
+ 1288  ifconfig eth15
+ 1289  iptables -t nat -A POSTROUTING -s 172.16.0.0/24 -o eth0 -J MASQUERADE
+ 1290  iptables -t nat -A POSTROUTING -s 172.16.0.0/24 -o eth0 -j MASQUERADE
+ 1291  ls
+ 1292  cd scale_ric_xapp/
+ 1293  ls
+ 1294  sudo su 
+ 1295  exit
+ 1296  history
+ 1297  exit
+ 1298  ./draw.sh 
+ 1299  cp draw.sh draw.sh_back
+ 1300  vim draw.sh
+ 1301  ./draw.sh
+ 1302  vim draw.sh
+ 1303  ./draw.sh
+ 1304  vim draw.sh
+ 1305  ./draw.sh
+ 1306  vim draw.sh
+ 1307  ./draw.sh
+ 1308  vim draw.sh
+ 1309  ./draw.sh
+ 1310  vim draw.sh
+ 1311  ./draw.sh
+ 1312  vim draw.sh
+ 1313  ./draw.sh
+ 1314  vim draw.sh
+ 1315  ./draw.sh
+ 1316  vim draw.sh
+ 1317  ls
+ 1318  cd ORAN_5G_srsRAN/
+ 1319  ls
+ 1320  tig
+ 1321  sudo apt install tig
+ 1322  sudo apt install tig --fix-broken
+ 1323  sudo apt install --fix-broken tig
+ 1324  apt --fix-broken install
+ 1325  ../draw.sh
+ 1326  tig
+ 1327  sudo apt install tig
+ 1328  sudo apt--fix-broken install 
+ 1329  apt --fix-broken install 
+ 1330  sudo apt install tig
+ 1331  sudo apt-get uninstall linux-tools-5.15.0-52
+ 1332  sudo apt-get removelinux-tools-5.15.0-52
+ 1333  sudo apt-get remove linux-tools-5.15.0-52
+ 1334  sudo apt --help
+ 1335  sudo apt install tig
+ 1336  git status
+ 1337  vim .git/config 
+ 1338  cd ..
+ 1339  ls
+ 1340  mail --help
+ 1341  apt install mailutils
+ 1342  sudo apt get clean 
+ 1343  sudo apt-get clean
+ 1344  apt install mailutils
+ 1345  sudo apt-get clean
+ 1346  sudo apt-get autoremove
+ 1347  sudo apt --fix-broken install
+ 1348  sudo apt-get install -f
+ 1349  sudo apt install tig
+ 1350  sudo apt-get install tig
+ 1351  sudo apt-get install tig -F
+ 1352  sudo apt-get install tig -f
+ 1353  sudo apt-get install -f tig
+ 1354  sudo apt-get install -f 
+ 1355  sudo apt-get install tig
+ 1356  sudo apt-get install -f remove
+ 1357  sudo apt-get install -f rig
+ 1358  sudo apt-get install -f tig
+ 1359  vim /etc/apt/sources.list
+ 1360  cp /etc/apt/sources.list /etc/apt/sources.list.bak
+ 1361  ls /etc/apt/sources.list
+ 1362  ls /etc/apt/
+ 1363  vim /etc/apt/sources.list.d/deadsnakes-ubuntu-ppa-jammy.list 
+ 1364  sudo apt-get update
+ 1365  sudo apt-get install tig
+ 1366  sudo apt-get remove linux-tools-common
+ 1367  sudo apt-get remove linux-tools-common -f
+ 1368  sudo apt --fix-broken install linux-tools-common
+ 1369  sudo aptitude install tig
+ 1370  sudo apt-get install -f
+ 1371  sudo dpkg-configure -a
+ 1372  sudo dpkg --configure -a
+ 1373  sudo dpkg-configure -a
+ 1374  sudo apt -u dist-upgrade
+ 1375  sudo apt-get -u dist-upgrade
+ 1376  sudo apt-get install --fix-broken 
+ 1377  clear
+ 1378  sudo apt-get install tig
+ 1379  sudo apt install --reinstall linux-tools-5.15.-52
+ 1380  sudo apt install --reinstall linux-tools-5.15-52
+ 1381  sudo apt install --reinstall linux-tools-5.15.0-52
+ 1382  sudo apt install --reinstall linux-tools-common
+ 1383  ./draw.sh
+ 1384  clear
+ 1385  ls
+ 1386  sudo apt-get install tig
+ 1387  dpkg -a
+ 1388  dpkg --get-selection
+ 1389  dpkg --get-selections
+ 1390  dpkg --force-depends --remove
+ 1391  sudo apt-get install tig
+ 1392  dpkg --force-depends --remove linux-tools-5.15.0-52
+ 1393  sudo apt-get install tig
+ 1394  ./draw.sh
+ 1395  exit
+ 1396  powerstat
+ 1397  powerstat -R
+ 1398  s-tui
+ 1399  s-tui -j
+ 1400  s-tui -t
+ 1401  s-tui -h
+ 1402  s-tui -v
+ 1403  s-tui 
+ 1404  sudo su 
+ 1405  exit
+ 1406  srsepc
+ 1407  iperf3 -s
+ 1408  iperf3 -c 172.16.0.2 -i1 -t100
+ 1409  iperf3 -c 172.16.0.2 -i1 -t3000
+ 1410  iperf3 -c 172.16.0.3 -i1 -t3000
+ 1411  iperf3 -c 172.16.0.4 -i1 -t3000
+ 1412  iperf3 -s
+ 1413  iperf3 -c 172.16.0.4 -i1 -t3000
+ 1414  iperf3 -s
+ 1415  iperf3 -c 172.16.0.4 -i1 -t3000
+ 1416  turbostat 
+ 1417  turbostat --Summary --quiet --show PkgWatt --interval 1 | gawk '{ printf("%.2f\n" , $1); fflush(); }' | ttyplot -s 100 -t :Turbostat - CPU Power (watts)" -u "watts"
+ 1418  turbostat --Summary --quiet --show PkgWatt --interval 1 | gawk '{ printf("%.2f\n" , $1); fflush(); }' | ttyplot -s 100 -t "Turbostat - CPU Power (watts)" -u "watts"
+ 1419  snap install ttyplot
+ 1420  turbostat --Summary --quiet --show PkgWatt --interval 1 | gawk '{ printf("%.2f\n" , $1); fflush(); }' | ttyplot -s 100 -t "Turbostat - CPU Power (watts)" -u "watts"
+ 1421  turbostat --Summary --quiet --show PkgWatt --interval 1 | gawk '{ printf("%.2f\n" , $1); fflush(); }' | ttyplot -s 20 -t "Turbostat - CPU Power (watts)" -u "watts"
+ 1422  turbostat --Summary --quiet --show PkgWatt --interval 1 | gawk '{ printf("%.2f\n" , $1); fflush(); }' | ttyplot -s 20 -t "Turbostat - CPU Power (watts)" -u "watts" >> draw.sh
+ 1423  echo "turbostat --Summary --quiet --show PkgWatt --interval 1 | gawk '{ printf("%.2f\n" , $1); fflush(); }' | ttyplot -s 20 -t "Turbostat - CPU Power (watts)" -u "watts"" >> draw.sh
+ 1424  history >> draw.sh 
+ 1425  vim draw.sh 
+ 1426  ./draw.sh
+ 1427  chmod +x draw.sh 
+ 1428  ./draw.sh 
+ 1429  iperf3 -c 172.16.0.6 -i1 -t100
+ 1430  iperf3 -s
+ 1431  sudo apt-get install tig
+ 1432  ./draw.sh
+ 1433  sudo apt-get install linux-tools-generic
+ 1434  history
+ 1435  history >> helppppppp.txt
+ 1436  vim helppppppp.txt 
+ 1437  ./draw.sh
+ 1438  sudo ./draw.sh
+ 1439  sudo apt install linux-cloud-tools-generic
+ 1440  sudo ./draw.sh
+ 1441  sudo apt install turbostat
+ 1442  sudo apt-get install turbostat
+ 1443  sudo su 
+ 1444  apt-get install turbostat
+ 1445  turbostat
+ 1446  apt-get install linux-tools-5.15.0-52-generic
+ 1447  reboot now
+ 1448  srsenb
+ 1449  taskset -c 0 srsenb
+ 1450  ./draw.sh
+ 1451  exit
+ 1452  cd 
+ 1453  cd /home/ubuntu/
+ 1454  l
+ 1455  cd scale_ric_databus/
+ 1456  ls
+ 1457  docker-compose up &
+ 1458  docker ps
+ 1459  cd ..
+ 1460  cd scale_ric_xapp/
+ 1461  docker-compose up &
+ 1462  docker attach xapp_producer_good
+ 1463  exit
+ 1464  exit
+ 1465  sudo su 
+ 1466  exit
+ 1467  ls
+ 1468  ./create_databus_interface.sh 
+ 1469  ls
+ 1470  ./create_interface.sh 
+ 1471  srsepc
+ 1472  exit
+ 1473  sudo su 
+ 1474  exit
+ 1475  apt-get install linux-tools-5.15.0.52-generic
+ 1476  apt-get install linux-tools-5.15.0.52
+ 1477  turbostat
+ 1478  apt-get install linux-cloud-tools-5.15.0-52-generic
+ 1479  uname -a
+ 1480  apt-get install linux-modules-extra-5.15.0-52-generic -y
+ 1481  sudo apt-get install -f
+ 1482  apt-get install linux-modules-extra-5.15.0-52-generic -y
+ 1483  apt --fix-broken install 
+ 1484  sudo apt-get install linux-tools-common
+ 1485  turbostat
+ 1486  sudo apt get install tig
+ 1487  apt-get install tig
+ 1488  ./draw.sh
+ 1489  clear
+ 1490  ls
+ 1491  tmux
+ 1492  exit
+ 1493  clear
+ 1494  cd ..
+ 1495  ls
+ 1496  taskset -c 0 srsenb
+ 1497  clear
+ 1498  ls
+ 1499  srsepc
+ 1500  clear
+ 1501  ls
+ 1502  ./draw.sh
+ 1503  clear
+ 1504  ./draw.sh
+ 1505  cat draw.sh
+ 1506  ./draw.sh
+ 1507  ./create_databus_interface.sh 
+ 1508  ls
+ 1509  cat create_bc1_interface.sh 
+ 1510  cat create_interface.sh 
+ 1511  srsenb 
+ 1512  exit
+ 1513  caddy file-server --browse --listen 192.168.52.11:8080 --root /home/ubuntu/bbb/x264/bbb/DASH_Files/full/
+ 1514  exit
+ 1515  srsepc
+ 1516  iptables -t nat -A POSTROUTING -s 172.16.0.0/24 -o eth0 -j MASQUERADE
+ 1517  shutdown now
+ 1518  exit
+ 1519  tmux
+ 1520  caddy file-server --browse --listen 192.168.52.11:8080 --root /home/ubuntu/bbb/x264/bbb/DASH_Files/full/
+ 1521  ls
+ 1522  ./create_databus_interface.sh 
+ 1523  ls
+ 1524  ./create_interface.sh 
+ 1525  ls
+ 1526  srsenb 
+ 1527  taskset -c 0 srsenb
+ 1528  srsenb 
+ 1529  taskset -c 0 srsenb
+ 1530  echo "performance" | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+ 1531  srsenb
+ 1532  taskset -c 0-3 srsenb
+ 1533  srsenb
+ 1534  iptables -t nat -A POSTROUTING -s 172.16.0.0/24 -o eth0 -j MASQUERADE
+ 1535  ls
+ 1536  cd scale_ric_databus/
+ 1537  ls
+ 1538  docker-compose up &
+ 1539  htop
+ 1540  ls
+ 1541  ./draw.sh
+ 1542  cat draw.sh
+ 1543  ./draw.sh
+ 1544  cat draw.sh
+ 1545  ./draw.sh
+ 1546  turbostat
+ 1547  history
+ 1548  stui
+ 1549  s-tui 
+ 1550  clear
+ 1551  ./draw.sh
+ 1552  srsepc
+ 1553  cd scale_ric_xapp/
+ 1554  docker-compose up &
+ 1555  docker ps 
+ 1556  docker attach xapp_producer_good 
+ 1557  htop
+ 1558  ps -a | grep srsenb
+ 1559  taskset -p 3123
+ 1560  taskset -cp 3123
+ 1561  ls
+ 1562  stress 
+ 1563  stress -c 0
+ 1564  stress --cpu 0
+ 1565  stress --cpu 1
+ 1566  stress --cpu 8 --io 4 
+ 1567  stress --cpu 10 --io 10
+ 1568  cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+ 1569  lscpu
+ 1570  reboot now
+ 1571  exit
+ 1572  tmux
+ 1573  tmux ls
+ 1574  tmux new -t 0
+ 1575  cd scale_ric_databus/
+ 1576  ls
+ 1577  docker-compose up &
+ 1578  cd ..
+ 1579  cd scale_ric_xapp/
+ 1580  docker-compose up &
+ 1581  docker ps
+ 1582  docker attach xapp_producer_good 
+ 1583  srsepc
+ 1584  taskset -c 7 srsepc
+ 1585  caddy file-server --browse --listen 192.168.52.11:8080 --root /home/ubuntu/bbb/x264/bbb/DASH_Files/full/
+ 1586  taskset -c 0 srsenb
+ 1587  taskset -c 0,1,2,3 srsenb
+ 1588  htop
+ 1589  taskset -c 0,1,2,3 srsenb
+ 1590  q
+ 1591  qq
+ 1592  q
+ 1593  taskset -c 0,1,2,3 srsenb
+ 1594  taskset -c 0,1,2,3,4 srsenb
+ 1595  htop
+ 1596  taskset -c 0,1,2,3,4 srsenb
+ 1597  clear
+ 1598  ls
+ 1599  ./create_databus_interface.sh 
+ 1600  ./create_interface.sh 
+ 1601  ls
+ 1602  ./draw.sh
+ 1603  cp draw.sh draw.sh.bakbak
+ 1604  vim draw.sh
+ 1605  ./draw.sh
+ 1606  vim draw.sh
+ 1607  ./draw.sh
+ 1608  vim draw.sh
+ 1609  ./draw.sh
+ 1610  cat draw.sh
+ 1611  turbostat --Summary --quiet --show PkgWatt --cpu 0-3
+ 1612  turbostat --Summary --quiet --show PkgWatt --cpu 0
+ 1613  $a = turbostat --Summary --quiet --show PkgWatt --cpu 0
+ 1614  a = turbostat --Summary --quiet --show PkgWatt --cpu 0
+ 1615  turbostat --Summary --quiet --show PkgWatt --cpu 0 + turbostat --Summary --quiet --show PkgWatt --cpu 1
+ 1616  (turbostat --Summary --quiet --show PkgWatt --cpu 0) + (turbostat --Summary --quiet --show PkgWatt --cpu 1)
+ 1617  turbostat --Summary --quiet --show PkgWatt --cpu core
+ 1618  turbostat --Summary --quiet --show PkgWatt --cpu 0,1,2,3
+ 1619  vim draw.sh
+ 1620  ./draw.sh
+ 1621  htop
+ 1622  lscpu
+ 1623  cat draw.sh
+ 1624  ./draw.sh
+ 1625  vim draw.sh
+ 1626  ./draw.sh
+ 1627  vim draw.sh
+ 1628  ./draw.sh
+ 1629  vim draw.sh
+ 1630  ./draw.sh
+ 1631  vim draw.sh
+ 1632  reboot now
+ 1633  iperf3 -s
+ 1634  exit
+ 1635  echo "performance" | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+ 1636  exit
+ 1637  cd scale_ric_databus/
+ 1638  docker-compose up &
+ 1639  cd ..
+ 1640  cd scale_ric_xapp/
+ 1641  ls
+ 1642  docker-compose up &
+ 1643  docker attach xapp_producer_good 
+ 1644  ls
+ 1645  ifconfig
+ 1646  ls
+ 1647  git log
+ 1648  git status
+ 1649  tig
+ 1650  apt install tig
+ 1651  ifconfig
+ 1652  apt install tig
+ 1653  git status
+ 1654  git diff
+ 1655  git add .
+ 1656  git commit -m "works on alien"
+ 1657  git config user.email "merimdzaferagic@gmail.com"
+ 1658  git config user.name "merimdzaferagic"
+ 1659  git commit -m "works on alien"
+ 1660  git push origin 
+ 1661  history >> mesa.txt

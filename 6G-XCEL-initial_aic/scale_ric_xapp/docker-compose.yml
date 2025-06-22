@@ -1,0 +1,13 @@
+services:
+  xapp:
+    container_name: xapp_print
+    build:
+        context: .
+        dockerfile: Dockerfile
+    tty: true
+    stdin_open: true
+    command: python3 xApp_hello_world.py
+    #command: python3 xApp.py
+    #command: python3 recv.py
+    volumes:
+      - ./:/scale_ric_xapp
