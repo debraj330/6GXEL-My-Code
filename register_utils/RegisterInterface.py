@@ -43,7 +43,7 @@ class RegisterInterface:
         print("Connecting to the databus")
         # self.consumer = self.context.socket(zmq.SUB)
         self.consumer = self.context.socket(zmq.REP)
-        self.consumer.bind(self.sub_socket)
+        self.consumer.connect(self.sub_socket)
         self.consumer.setsockopt(zmq.LINGER, 0)
         # self.consumer.setsockopt(zmq.SUBSCRIBE,b"")
         self.consumer.setsockopt(zmq.CONFLATE, 1)
