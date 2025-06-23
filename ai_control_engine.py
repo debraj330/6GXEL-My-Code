@@ -1,136 +1,99 @@
-#PYTHON CODE
-
-# File: ai_control_engine.py
-
 import zmq
 import threading
 import time
+import uuid
 import json
-from register_utils.RegisterInterface import RegisterInterface
-from register_utils import messages
+import configparser
 
-AIC_ID = 0
+# Config
+def read_config(path="node_msg_broker.conf"):
+    parser = configparser.ConfigParser()
+    parser.read(path)
+    cfg = parser["broker"]
+    return {
+        "ip_address": cfg["ip_address"],
+        "recv_measurements": cfg["recv_measurements"],
+        "pub_measurements": cfg["pub_measurements"],
+        "recv_commands": cfg["recv_commands"],
+        "pub_commands": cfg["pub_commands"],
+        "registration_ip_address": cfg["registration_ip_address"]
+    }
+
+# Constants
+AIC_ID = f"ai_engine_{uuid.uuid4()}"[:12]
 
 class AIControlEngine:
     def __init__(self):
-        self.register = RegisterInterface()
+        self.config = read_config()
+        self.context = zmq.Context()
         self.running = True
 
-    def handle_ai_app_registration(self, msg):
-        print(f"[AIControlEngine] AI App Registration: {msg['node_id']}")
-        try:
-            self.register.register_ai_app(msg['node_id'])
+        self.register_push_socket = self.context.socket(zmq.PUSH)
+        self.register_push_socket.connect(f"tcp://{self.config['ip_address']}:{self.config['recv_measurements']}")
 
-            # Verify that the requested PMs and CTRLs exist
-            missing_pms = [pm for pm in msg['list_of_pm'] if pm not in self.register.get_list_of_pm()]
-            missing_ctrls = [ctrl for ctrl in msg['list_of_ctrl'] if ctrl not in self.register.get_list_of_ctrl()]
+        self.register_sub_socket = self.context.socket(zmq.SUB)
+        self.register_sub_socket.connect(f"tcp://{self.config['ip_address']}:{self.config['pub_commands']}")
+        self.register_sub_socket.setsockopt_string(zmq.SUBSCRIBE, "")
 
-            if missing_pms or missing_ctrls:
-                raise ValueError(f"Missing PMs: {missing_pms}, Missing CTRLS: {missing_ctrls}")
+        print(f"[AIControlEngine] Initialized with ID: {AIC_ID}")
 
-            self.register.register_ai_app_actions(
-                msg['node_id'],
-                msg['network_node_list'],
-                msg['list_of_pm'],
-                msg['list_of_ctrl']
-            )
+    def register_with_register(self):
+        print("[AIControlEngine] Sending registration to register...")
+        msg = {
+            "node_type": "ai_app",
+            "msg_type": "register",
+            "node_id": AIC_ID
+        }
+        self.register_push_socket.send_json(msg)
 
-            ack = messages.ai_app_access_ack
-            ack['node_id'] = AIC_ID
-            ack['databus_ip'] = self.register.config['registration_ip_address']
-            ack['ai_app_listen_port'] = self.register.config['pub_measurements']
-            ack['ai_app_send_command_port'] = self.register.config['recv_commands']
-            self.register.send_msg(ack)
-        except Exception as e:
-            print("[ERROR] AI App Registration Failed:", e)
-            err = messages.err
-            err['node_id'] = AIC_ID
-            err['msg_content'] = str(e)
-            self.register.send_msg(err)
+    def request_pm_ctrl_access(self, target_node_id, pms, ctrls):
+        print("[AIControlEngine] Requesting PM/CTRL access for AI App...")
+        msg = {
+            "node_type": "ai_app",
+            "msg_type": "pm_ctrl_req",
+            "node_id": AIC_ID,
+            "network_node_list": [target_node_id],
+            "list_of_pm": pms,
+            "list_of_ctrl": ctrls
+        }
+        self.register_push_socket.send_json(msg)
 
-    def handle_node_registration(self, msg):
-        print(f"[AIControlEngine] Network Node Registration: {msg['node_id']}")
-        try:
-            self.register.register_network_node(msg['node_id'])
-            ack = messages.network_node_registration_ack
-            ack['node_id'] = AIC_ID
-            self.register.send_msg(ack)
-        except Exception as e:
-            print("[ERROR] Node Registration Failed:", e)
-            err = messages.err
-            err['node_id'] = AIC_ID
-            err['msg_content'] = str(e)
-            self.register.send_msg(err)
-
-    def handle_pm_availability(self, msg):
-        print(f"[AIControlEngine] PM Availability from {msg['node_id']}: {msg['available_pms']}")
-        try:
-            self.register.register_available_pms(msg['node_id'], msg['available_pms'])
-            ack = messages.network_node_pm_availability_ack
-            ack['node_id'] = AIC_ID
-            ack['databus_ip'] = self.register.config['registration_ip_address']
-            ack['send_pm_port'] = self.register.config['recv_measurements']
-            self.register.send_msg(ack)
-        except Exception as e:
-            print("[ERROR] PM Availability Error:", e)
-            err = messages.err
-            err['node_id'] = AIC_ID
-            err['msg_content'] = str(e)
-            self.register.send_msg(err)
-
-    def handle_alive(self, msg):
-        print(f"[AIControlEngine] Alive signal from: {msg['node_id']}")
-        try:
-            self.register.alive_network_node_update(msg['node_id'])
-            ack = messages.network_node_alive_ack
-            ack['node_id'] = AIC_ID
-            self.register.send_msg(ack)
-        except Exception as e:
-            print("[ERROR] Alive update failed:", e)
-            err = messages.err
-            err['node_id'] = AIC_ID
-            err['msg_content'] = str(e)
-            self.register.send_msg(err)
-
-    def handle_msg(self, msg):
-        node_type = msg.get("node_type")
-        msg_type = msg.get("msg_type")
-
-        if node_type == "network_node":
-            if msg_type == "register":
-                self.handle_node_registration(msg)
-            elif msg_type == "pm_availability":
-                self.handle_pm_availability(msg)
-            elif msg_type == "alive":
-                self.handle_alive(msg)
-
-        elif node_type == "ai_app":
-            if msg_type == "register":
-                self.handle_ai_app_registration(msg)
-
-    def start_msg_loop(self):
+    def listen_for_messages(self):
         while self.running:
             try:
-                msg = self.register.read_msg()
-                print("[AIControlEngine] Received message:", msg)
-                self.handle_msg(msg)
-            except Exception as e:
-                print("[ERROR] Message handling failed:", e)
+                msg = self.register_sub_socket.recv_json()
+                print("[AIControlEngine] Message from register or node:", msg)
 
-    def check_node_status_loop(self):
-        while self.running:
-            try:
-                for node_id in self.register.get_network_nodes():
-                    self.register.check_if_network_node_is_alive(node_id)
-                time.sleep(2)
+                if msg.get("msg_type") == "ai_app_registration_ack":
+                    print("[AIControlEngine] Registered with Register successfully.")
+                    # After registration, ask for access
+                    if msg["network_node_list"]:
+                        node_id = msg["network_node_list"][0]
+                        pms = msg["list_of_pm"]
+                        ctrls = msg["list_of_ctrl"]
+                        self.request_pm_ctrl_access(node_id, pms, ctrls)
+
+                elif msg.get("msg_type") == "ai_app_access_ack":
+                    print(f"[AIControlEngine] Access granted for PM/CTRL on {msg['databus_ip']}")
+                    # You may now connect to PUB/SUB for live PMs and send commands to PULL socket
+
+                elif msg.get("msg_type") == "err":
+                    print("[AIControlEngine] ERROR from Register:", msg["msg_content"])
+
             except Exception as e:
-                print("[ERROR] Node status check failed:", e)
+                print("[AIControlEngine] Error receiving message:", e)
 
     def run(self):
-        threading.Thread(target=self.start_msg_loop).start()
-        threading.Thread(target=self.check_node_status_loop).start()
+        self.register_with_register()
+        threading.Thread(target=self.listen_for_messages).start()
+
 
 if __name__ == "__main__":
     engine = AIControlEngine()
     engine.run()
 
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("\n[AIControlEngine] Shutting down...")
