@@ -3,7 +3,7 @@ import zmq
 
 context = zmq.Context()
 socket = context.socket(zmq.REP)
-socket.bind("tcp://0.0.0.0:5558")
+socket.bind("tcp://127.0.0.1:5558")
 print("[Simple Register] Waiting for message...")
 while True:
     try:
