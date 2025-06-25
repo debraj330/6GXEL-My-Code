@@ -8,19 +8,23 @@ def handle_node_registration():
     context = zmq.Context()
     node_socket = context.socket(zmq.REP)
     node_socket.bind("tcp://0.0.0.0:5558")
+    print("[Register] Binding socket to tcp://0.0.0.0:5558")
     while True:
         print("[Register] Waiting for node registration message...")
-        message = node_socket.recv_json()
-        print(f"[Register] Received: {message}")
-        node_id = message.get("node_id")
-        metrics = message.get("metrics")
-        if node_id == valid_node_id:
-            registered_nodes[node_id] = metrics
-            print(f"[Register] Registered Node: {node_id} with metrics {metrics}")
-            node_socket.send_string("REGISTRATION_SUCCESS")
-        else:
-            print(f"[Register] Invalid node tried to register with ID: {node_id}")
-            node_socket.send_string("REGISTRATION_FAILED")
+        try:
+            message = node_socket.recv_json()
+            print(f"[Register] Received: {message}")
+            node_id = message.get("node_id")
+            if node_id == "node-001":
+                registered_nodes[node_id] = message.get("metrics")
+                print(f"[Register] Registered Node: {node_id} with metrics {registered_nodes[node_id]}")
+                node_socket.send_json({"status": "REGISTRATION_SUCCESS"})
+            else:
+                print(f"[Register] Invalid node ID: {node_id}")
+                node_socket.send_json({"status": "REGISTRATION_FAILED"})
+        except Exception as e:
+            print(f"[Register] ERROR: {e}")
+
 
 def handle_ai_requests():
     context = zmq.Context()
