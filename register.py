@@ -40,5 +40,6 @@ def handle_ai_requests():
 
 if __name__ == "__main__":
     print("[Register] Register service started...")
+    handle_node_registration()
     threading.Thread(target=handle_node_registration).start()
     threading.Thread(target=handle_ai_requests).start()
