@@ -1,31 +1,36 @@
 import zmq
 import time
+import json
 
-# Dummy network node details
-node_id = "node-001"
-performance_metrics = {
+NODE_ID = "node-001"
+METRICS = {
     "bandwidth": "100Mbps",
-    "memory": "2GB",
-    "energy": "90%",
-    "cpu": "2.4GHz"
+    "memory": "4GB",
+    "energy": "80%",
+    "cpu_cycles": "2GHz"
 }
 
-# Setup
-context = zmq.Context()
-register_socket = context.socket(zmq.REQ)
-register_socket.connect("tcp://192.168.0.178:5558")
+def register_with_server():
+    context = zmq.Context()
+    register_socket = context.socket(zmq.REQ)
+    register_socket.connect("tcp://192.168.0.178:5558")
+    register_socket.RCVTIMEO = 5000  # timeout in ms
+    print("[Network Node] Connecting to Register service...")
 
-def register_node():
-    print("[Network Node] Registering with node ID:", node_id)
-    register_socket.send_json({
-        "node_id": node_id,
-        "metrics": performance_metrics
-    })
-    reply = register_socket.recv_string()
-    if reply == "REGISTRATION_SUCCESS":
-        print("[Network Node] Registration successful.")
-    else:
-        print("[Network Node] Registration failed.")
+    print(f"[Network Node] Registering with node ID: {NODE_ID}")
+    message = {
+        "node_id": NODE_ID,
+        "metrics": METRICS
+    }
+    try:
+        register_socket.send_json(message)
+        print("[Network Node] Sent registration message. Waiting for reply...")
+        response = register_socket.recv_json()
+        print(f"[Network Node] Received from register: {response}")
+    except zmq.Again:
+        print("[Network Node] ERROR: No response from register.py (timeout)")
+    except Exception as e:
+        print(f"[Network Node] ERROR: {e}")
 
 if __name__ == "__main__":
-    register_node()
+    register_with_server()
