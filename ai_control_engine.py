@@ -3,7 +3,7 @@ import zmq
 # Setup
 context = zmq.Context()
 register_socket = context.socket(zmq.REQ)
-register_socket.connect("tcp://192.168.0.178:5559")
+register_socket.connect("tcp://192.168.56.1:5559")
 
 def wait_for_node():
     while True:
