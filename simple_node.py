@@ -4,7 +4,7 @@ import json
 
 context = zmq.Context()
 socket = context.socket(zmq.REQ)
-socket.connect("tcp://127.0.0.1:5558")
+socket.connect("tcp://192.168.0.178:5558")
 socket.RCVTIMEO = 5000  # timeout in ms
 
 print("[Simple Node] Sending hello...")
