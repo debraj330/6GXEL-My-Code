@@ -7,8 +7,8 @@ valid_node_id = "node-001"  # Only this node is considered genuine
 def handle_node_registration():
     context = zmq.Context()
     node_socket = context.socket(zmq.REP)
-    node_socket.bind("tcp://0.0.0.0:5558")
-    print("[Register] Binding socket to tcp://0.0.0.0:5558")
+    node_socket.bind("tcp://192.168.0.178:5558")
+    print("[Register] Binding socket to tcp://192.168.0.178:5558")
     while True:
         print("[Register] Waiting for node registration message...")
         try:
