@@ -13,7 +13,7 @@ performance_metrics = {
 # Setup
 context = zmq.Context()
 register_socket = context.socket(zmq.REQ)
-register_socket.connect("tcp://192.168.56.1:5558")
+register_socket.connect("tcp://192.168.0.178:5558")
 
 def register_node():
     print("[Network Node] Registering with node ID:", node_id)
