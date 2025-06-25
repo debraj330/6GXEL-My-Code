@@ -29,7 +29,7 @@ def handle_node_registration():
 def handle_ai_requests():
     context = zmq.Context()
     ai_socket = context.socket(zmq.REP)
-    ai_socket.bind("tcp://0.0.0.0:5559")
+    ai_socket.bind("tcp://192.168.0.178:5559")
     while True:
         message = ai_socket.recv_string()
         if message == "CHECK_NODE":
