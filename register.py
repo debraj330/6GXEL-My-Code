@@ -9,7 +9,9 @@ def handle_node_registration():
     node_socket = context.socket(zmq.REP)
     node_socket.bind("tcp://0.0.0.0:5558")
     while True:
+        print("[Register] Waiting for node registration message...")
         message = node_socket.recv_json()
+        print(f"[Register] Received: {message}")
         node_id = message.get("node_id")
         metrics = message.get("metrics")
         if node_id == valid_node_id:
