@@ -20,7 +20,7 @@ def handle_node_registration():
             registered_nodes[node_id] = message.get("metrics")
             print(f"[Register] Registered Node: {node_id} with metrics {registered_nodes[node_id]}")
             node_socket.send_json({"status": "REGISTRATION_SUCCESS"})
-            socket.close()
+            node_socket.close()
             break  # Exit loop after successful registration
         else:
             print(f"[Register] Invalid node ID: {node_id}")
