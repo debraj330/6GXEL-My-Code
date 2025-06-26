@@ -15,18 +15,19 @@ def handle_node_registration():
         message = node_socket.recv_json()
         print(f"[Register] Received: {message}")
         node_id = message.get("node_id")
-        
+
         if node_id == valid_node_id:
             registered_nodes[node_id] = message.get("metrics")
             print(f"[Register] Registered Node: {node_id} with metrics {registered_nodes[node_id]}")
             node_socket.send_json({"status": "REGISTRATION_SUCCESS"})
             node_socket.close()
-            break  # Exit loop after successful registration
+            break  # Exit after successful registration
         else:
             print(f"[Register] Invalid node ID: {node_id}")
             node_socket.send_json({"status": "REGISTRATION_FAILED"})
 
-    #node_socket.close()
+    # Now handle AI requests
+    handle_ai_requests()
 
 def handle_ai_requests():
     context = zmq.Context()
@@ -34,17 +35,12 @@ def handle_ai_requests():
     ai_socket.bind("tcp://192.168.0.178:5559")
     print("[Register] Binding socket to tcp://192.168.0.178:5559")
 
+    print("[Register] Waiting for AI engine message...")
     while True:
-        print("[Register] Waiting for AI engine message...")
         message = ai_socket.recv_string()
-
-        if message == "CHECK_NODE":
-            if valid_node_id in registered_nodes:
-                ai_socket.send_string("NODE_PRESENT")
-            else:
-                ai_socket.send_string("NO_NODE")
+        print(f"[Register] Received from AI engine: {message}")
+        ai_socket.send_string(f"ACK: {message}")  # Acknowledge back
 
 if __name__ == "__main__":
     print("[Register] Register service started...")
-    threading.Thread(target=handle_node_registration).start()
-    threading.Thread(target=handle_ai_requests).start()
+    handle_node_registration()
