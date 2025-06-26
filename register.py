@@ -26,7 +26,7 @@ def handle_node_registration():
             print(f"[Register] Invalid node ID: {node_id}")
             node_socket.send_json({"status": "REGISTRATION_FAILED"})
 
-    node_socket.close()
+    #node_socket.close()
 
 def handle_ai_requests():
     context = zmq.Context()
