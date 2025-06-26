@@ -19,5 +19,16 @@ def wait_for_node():
         else:
             print("[AI Engine] Waiting for valid network node...")
 
+def send_messages_to_register():
+    while True:
+        msg = input("Enter Your Message: ")
+        if msg.lower() in ["exit", "quit"]:
+            print("[AI Engine] Exiting...")
+            break
+        register_socket.send_string(msg)
+        reply = register_socket.recv_string()
+        print(f"[AI Engine] Received from register: {reply}")
+
 if __name__ == "__main__":
     wait_for_node()
+    send_messages_to_register()
