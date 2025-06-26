@@ -1,5 +1,4 @@
 import zmq
-import threading
 
 registered_nodes = {}
 valid_node_id = "node-001"  # Only this node is considered genuine
@@ -39,7 +38,15 @@ def handle_ai_requests():
     while True:
         message = ai_socket.recv_string()
         print(f"[Register] Received from AI engine: {message}")
-        ai_socket.send_string(f"ACK: {message}")  # Acknowledge back
+
+        if message == "CHECK_NODE":
+            if valid_node_id in registered_nodes:
+                ai_socket.send_string("NODE_PRESENT")
+            else:
+                ai_socket.send_string("NO_NODE")
+        else:
+            # Echo general messages
+            ai_socket.send_string(f"ACK: {message}")
 
 if __name__ == "__main__":
     print("[Register] Register service started...")
