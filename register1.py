@@ -20,7 +20,7 @@ def handle_node_registration():
             registered_node[node_id] = metrics
             print(f"[Register1] Registered Node: {node_id}, Metrics: {metrics}")
             socket.send_json({"status": "NODE_REGISTRATION_SUCCESS"})
-            break
+            break  # Move to AI registration only after successful node reg
         else:
             print(f"[Register1] Invalid node ID: {node_id}")
             socket.send_json({"status": "NODE_REGISTRATION_FAILED"})
@@ -31,9 +31,8 @@ def handle_ai_registration_and_command():
     ai_socket.bind("tcp://192.168.0.178:5561")
     print("[Register1] Listening for AI Control Engine on port 5561")
 
-    # Publisher socket to send to inter_ai_broker
     pub_socket = context.socket(zmq.PUB)
-    pub_socket.connect("tcp://192.168.0.178:5563")  # Intermediary broker's SUB connects here
+    pub_socket.connect("tcp://192.168.0.178:5563")  # inter_ai_broker.py listens here
     print("[Register1] Connected to inter_ai_broker PUB port 5563")
 
     while True:
@@ -44,7 +43,6 @@ def handle_ai_registration_and_command():
             print(f"[Register1] Valid AI ID: {ai_id} registered")
             ai_socket.send_json({"status": "AI_REGISTRATION_SUCCESS"})
 
-            # Decision logic: send APP1 or APP2
             app_choice = input("[Register1] Enter APP to instruct (APP1/APP2): ").strip().upper()
 
             if app_choice == "APP1":
