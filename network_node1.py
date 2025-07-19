@@ -1,78 +1,56 @@
+# ------------------------------
+# File: network_node1.py
+# ------------------------------
 import zmq
-import threading
-import configparser
+import time
+import random
 
-def expose_measurements(ip_address, recv_measurements_port, pub_measurements_port):
-    print("Measurements exposure broker started")
+NODE_ID = "N001"
+METRICS = {
+    "SINR": f"{random.uniform(10, 30):.2f} dB",
+    "Throughput": f"{random.randint(50, 150)} Mbps",
+    "Delay": f"{random.uniform(1, 10):.2f} ms"
+}
 
+# Step 1: Register to Register service
+def register_with_register():
     context = zmq.Context()
+    socket = context.socket(zmq.REQ)
+    socket.connect("tcp://192.168.0.178:5558")
+    
+    print("[Node] Connecting to Register...")
+    socket.send_json({
+        "node_id": NODE_ID,
+        "metrics": METRICS
+    })
 
-    # PULL from base stations
-    sub_BS = context.socket(zmq.PULL)
-    sub_BS.bind(f"tcp://{ip_address}:{recv_measurements_port}")
+    try:
+        reply = socket.recv_json()
+        if reply.get("status") == "REGISTRATION_SUCCESS":
+            print(f"[Node] Registration successful with metrics: {METRICS}")
+        else:
+            print("[Node] Registration failed.")
+    except zmq.ZMQError as e:
+        print(f"[Node] ERROR: {e}")
 
-    # PUB to xApps
-    pub_xapps = context.socket(zmq.PUB)
-    pub_xapps.bind(f"tcp://{ip_address}:{pub_measurements_port}")
-
-    zmq.proxy(sub_BS, pub_xapps)
-
-
-def expose_commands(ip_address, recv_commands_port, pub_commands_port):
-    print("Commands exposure broker started")
-
+# Step 2: Wait for instructions on a separate socket
+def listen_for_commands():
     context = zmq.Context()
-
-    # PULL from xApps
-    sub_xapps = context.socket(zmq.PULL)
-    sub_xapps.bind(f"tcp://{ip_address}:{recv_commands_port}")
-
-    # PUB to base stations
-    pub_BS = context.socket(zmq.PUB)
-    pub_BS.bind(f"tcp://{ip_address}:{pub_commands_port}")
-
-    zmq.proxy(sub_xapps, pub_BS)
-
-
-def read_config(filename):
-    config = configparser.ConfigParser()
-    config.read(filename)
-
-    # Assume config is under a section called 'broker'
-    cfg = config['broker']
-    return {
-        'ip_address': cfg.get('ip_address'),
-        'recv_measurements': cfg.get('recv_measurements'),
-        'pub_measurements': cfg.get('pub_measurements'),
-        'recv_commands': cfg.get('recv_commands'),
-        'pub_commands': cfg.get('pub_commands'),
-    }
-
+    socket = context.socket(zmq.REP)
+    socket.bind("tcp://192.168.0.178:5560")
+    
+    while True:
+        command = socket.recv_string()
+        print(f"[Node] Received command: {command}")
+        if command == "APP1":
+            print(f"SINR: {METRICS['SINR']}, Throughput: {METRICS['Throughput']}")
+            socket.send_string("APP1 task done")
+        elif command == "APP2":
+            print(f"Delay: {METRICS['Delay']}")
+            socket.send_string("APP2 task done")
+        else:
+            socket.send_string("Unknown command")
 
 if __name__ == "__main__":
-    config = read_config("node_msg_broker.conf")
-
-    ip_address = config['ip_address']
-    recv_measurements_port = config['recv_measurements']
-    pub_measurements_port = config['pub_measurements']
-    recv_commands_port = config['recv_commands']
-    pub_commands_port = config['pub_commands']
-
-    # Start threads
-    th_measurements = threading.Thread(
-        target=expose_measurements,
-        args=(ip_address, recv_measurements_port, pub_measurements_port),
-        daemon=True
-    )
-
-    th_commands = threading.Thread(
-        target=expose_commands,
-        args=(ip_address, recv_commands_port, pub_commands_port),
-        daemon=True
-    )
-
-    th_measurements.start()
-    th_commands.start()
-
-    th_measurements.join()
-    th_commands.join()
+    register_with_register()
+    listen_for_commands()
