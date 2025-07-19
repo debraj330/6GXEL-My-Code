@@ -26,7 +26,7 @@ def register_with_register():
 
     try:
         reply = socket.recv_json()
-        if reply.get("status") == "REGISTRATION_SUCCESS":
+        if reply.get("status") == "NODE_REGISTRATION_SUCCESS":
             print(f"[Node] Registration successful with metrics: {METRICS}")
         else:
             print("[Node] Registration failed.")
