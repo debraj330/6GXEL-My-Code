@@ -8,8 +8,8 @@ valid_ai_id = "AI001"
 def handle_node_registration():
     context = zmq.Context()
     socket = context.socket(zmq.REP)
-    socket.bind("tcp://192.168.0.178:5558")
-    print("[Register1] Listening for Network Node on port 5558")
+    socket.bind("tcp://192.168.0.178:5560")
+    print("[Register1] Listening for Network Node on port 5560")
 
     while True:
         msg = socket.recv_json()
@@ -28,8 +28,8 @@ def handle_node_registration():
 def handle_ai_registration_and_command():
     context = zmq.Context()
     ai_socket = context.socket(zmq.REP)
-    ai_socket.bind("tcp://192.168.0.178:5559")
-    print("[Register1] Listening for AI Control Engine on port 5559")
+    ai_socket.bind("tcp://192.168.0.178:5561")
+    print("[Register1] Listening for AI Control Engine on port 5561")
 
     pub_socket = context.socket(zmq.PUB)
     pub_socket.connect("tcp://192.168.0.178:5563")  # inter_ai_broker.py listens here
