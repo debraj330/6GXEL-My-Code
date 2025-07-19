@@ -1,6 +1,9 @@
 # ------------------------------
 # File: network_node1.py
 # ------------------------------
+# ------------------------------
+# File: network_node1.py
+# ------------------------------
 import zmq
 import time
 import random
@@ -37,7 +40,7 @@ def register_with_register():
 def listen_for_commands():
     context = zmq.Context()
     socket = context.socket(zmq.REP)
-    socket.bind("tcp://192.168.0.178:5558")
+    socket.bind("tcp://192.168.0.178:5560")
     
     while True:
         command = socket.recv_string()
