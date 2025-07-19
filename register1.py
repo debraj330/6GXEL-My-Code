@@ -8,8 +8,8 @@ valid_ai_id = "AI001"
 def handle_node_registration():
     context = zmq.Context()
     socket = context.socket(zmq.REP)
-    socket.bind("tcp://192.168.0.178:5560")
-    print("[Register1] Listening for Network Node on port 5560")
+    socket.bind("tcp://192.168.0.178:5558")
+    print("[Register1] Listening for Network Node on port 5558")
 
     while True:
         msg = socket.recv_json()
