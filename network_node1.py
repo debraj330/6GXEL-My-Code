@@ -1,9 +1,6 @@
 # ------------------------------
 # File: network_node1.py
 # ------------------------------
-# ------------------------------
-# File: network_node1.py
-# ------------------------------
 import zmq
 import time
 import random
@@ -19,9 +16,9 @@ METRICS = {
 def register_with_register():
     context = zmq.Context()
     socket = context.socket(zmq.REQ)
-    socket.connect("tcp://192.168.0.178:5558")
+    socket.connect("tcp://192.168.0.178:5560")  # ✅ Corrected port to match register1.py
     
-    print("[Node] Connecting to Register...")
+    print("[Node] Connecting to Register at port 5560...")
     socket.send_json({
         "node_id": NODE_ID,
         "metrics": METRICS
@@ -29,7 +26,7 @@ def register_with_register():
 
     try:
         reply = socket.recv_json()
-        if reply.get("status") == "NODE_REGISTRATION_SUCCESS":
+        if reply.get("status") == "REGISTRATION_SUCCESS":
             print(f"[Node] Registration successful with metrics: {METRICS}")
         else:
             print("[Node] Registration failed.")
@@ -40,7 +37,7 @@ def register_with_register():
 def listen_for_commands():
     context = zmq.Context()
     socket = context.socket(zmq.REP)
-    socket.bind("tcp://192.168.0.178:5560")
+    socket.bind("tcp://192.168.0.178:5562")  # Should match register1.py command port for this node
     
     while True:
         command = socket.recv_string()
