@@ -1,7 +1,6 @@
 import zmq
 import time
 import threading
-import random
 
 NODE_ID = "N002"
 METRICS = {
@@ -14,7 +13,7 @@ METRICS = {
 def register_to_register2():
     context = zmq.Context()
     socket = context.socket(zmq.REQ)
-    socket.connect("tcp://192.168.0.178:5570")
+    socket.connect("tcp://192.168.0.178:5570")  # Correct port for register2.py
     print("[Node2] Registering to register2...")
 
     socket.send_json({
@@ -51,7 +50,7 @@ def listen_for_commands():
         elif cmd == "APP5":
             def app5():
                 while True:
-                    print(f"[APP5] Boosted Throughput: 150Mbps, Reduced Delay: 5ms, CQI: 20, SINR: 30dB")
+                    print("[APP5] Boosted Throughput: 150Mbps, Reduced Delay: 5ms, CQI: 20, SINR: 30dB")
                     time.sleep(1)
             threading.Thread(target=app5, daemon=True).start()
             socket.send_string("APP5 Started")
