@@ -1,51 +1,40 @@
-# ------------------------------
-# File: ai_control_engine1.py
-# ------------------------------
+# ai_control_engine1.py
 import zmq
+import time
 
 AI_ID = "AI001"
 
-def register_ai():
+def register_to_register():
     context = zmq.Context()
     socket = context.socket(zmq.REQ)
-    socket.connect("tcp://192.168.0.178:5561")
+    socket.connect("tcp://192.168.0.178:5559")
 
-    # Step 1: Send only registration
-    socket.send_json({
-        "ai_id": AI_ID
-    })
+    print("[AI] Registering to register...")
+    socket.send_json({"ai_id": AI_ID})
 
-    try:
-        reply = socket.recv_json()
-        print(f"[AI Engine] Register response: {reply}")
-        if reply.get("status") == "AI_REGISTRATION_SUCCESS":
-            return True
-    except zmq.ZMQError as e:
-        print(f"[AI Engine] ERROR: {e}")
+    reply = socket.recv_json()
+    if reply.get("status") == "AI_REGISTRATION_SUCCESS":
+        print("[AI] Registration successful. Node metrics received:")
+        print(reply.get("node_metrics"))
+        return True
+    else:
+        print("[AI] Registration failed.")
+        return False
 
-    return False
-
-def send_command(app_command):
+def send_command_to_node():
     context = zmq.Context()
     socket = context.socket(zmq.REQ)
-    socket.connect("tcp://192.168.0.178:5561")
-    
-    socket.send_json({
-        "ai_id": AI_ID,
-        "command": app_command
-    })
+    socket.connect("tcp://192.168.0.178:5560")
 
-    try:
-        reply = socket.recv_json()
-        print(f"[AI Engine] Register response: {reply}")
-    except zmq.ZMQError as e:
-        print(f"[AI Engine] ERROR: {e}")
+    while True:
+        app = input("Enter APP name to run (APP1/APP2): ").strip()
+        if app in ["APP1", "APP2"]:
+            socket.send_string(app)
+            reply = socket.recv_string()
+            print(f"[AI] Node replied: {reply}")
+        else:
+            print("[AI] Invalid APP name. Try again.")
 
 if __name__ == "__main__":
-    print("[AI Engine] Running...")
-    while True:
-        cmd = input("Enter command for App1 or App2 (APP1/APP2): ").strip()
-        if cmd in ["APP1", "APP2"]:
-            send_command(cmd)
-        else:
-            print("Invalid input. Try again.")
+    if register_to_register():
+        send_command_to_node()
