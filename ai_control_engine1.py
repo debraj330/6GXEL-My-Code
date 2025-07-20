@@ -4,6 +4,11 @@ import time
 
 AI_ID = "AI001"
 
+# Setup PUB socket to notify broker (inter_ai_broker.py)
+context_pub = zmq.Context()
+pub_socket = context_pub.socket(zmq.PUB)
+pub_socket.bind("tcp://192.168.0.178:5562")  # <-- Added line
+
 def register_to_register():
     context = zmq.Context()
     socket = context.socket(zmq.REQ)
