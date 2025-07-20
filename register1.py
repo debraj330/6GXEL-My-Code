@@ -9,9 +9,9 @@ registered_ai = None
 node_metrics = {}
 
 # Setup PUB socket to notify broker (inter_ai_broker.py)
-context_pub = zmq.Context()
-pub_socket = context_pub.socket(zmq.PUB)
-pub_socket.bind("tcp://192.168.0.178:5562")  # <-- Added line
+# context_pub = zmq.Context()
+# pub_socket = context_pub.socket(zmq.PUB)
+# pub_socket.bind("tcp://192.168.0.178:5562")  # <-- Added line
 
 
 def handle_node_registration():
@@ -29,7 +29,7 @@ def handle_node_registration():
             socket.send_json({"status": "REGISTRATION_SUCCESS"})
             print(f"[Register] Node {VALID_NODE_ID} registered with metrics: {node_metrics}")
             # Notify broker about APP1 after successful node registration
-            pub_socket.send_string("APP1")
+            # pub_socket.send_string("APP1")
         else:
             socket.send_json({"status": "REGISTRATION_FAILED"})
             print("[Register] Invalid node ID!")
