@@ -1,19 +1,20 @@
+# inter_ai_broker.py
 import zmq
 
-def start_broker():
-    context = zmq.Context()
-    receiver = context.socket(zmq.SUB)
-    receiver.connect("tcp://192.168.0.178:5563")  # Register1's PUB socket
-    receiver.setsockopt_string(zmq.SUBSCRIBE, "")
+context = zmq.Context()
 
-    sender = context.socket(zmq.PUB)
-    sender.bind("tcp://192.168.0.178:5573")  # Broadcast to AI2
-    print("[InterBroker] Listening for APP messages from register1.py...")
+# SUB socket to listen to register1.py
+sub_socket = context.socket(zmq.SUB)
+sub_socket.connect("tcp://192.168.0.178:5562")
+sub_socket.setsockopt_string(zmq.SUBSCRIBE, "")
 
-    while True:
-        app_msg = receiver.recv_string()
-        print(f"[InterBroker] Forwarding: {app_msg}")
-        sender.send_string(app_msg)
+# PUB socket to forward to ai_control_engine2.py
+pub_socket = context.socket(zmq.PUB)
+pub_socket.bind("tcp://192.168.0.178:5568")
 
-if __name__ == "__main__":
-    start_broker()
+print("[Broker] Forwarding messages from register1 to AI2...")
+
+while True:
+    msg = sub_socket.recv_string()
+    print(f"[Broker] Received: {msg}")
+    pub_socket.send_string(msg)
