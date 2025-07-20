@@ -1,61 +1,49 @@
+# register1.py
 import zmq
 import threading
 
-registered_node = {}
-valid_node_id = "N001"
-valid_ai_id = "AI001"
+VALID_NODE_ID = "N001"
+VALID_AI_ID = "AI001"
+registered_node = None
+registered_ai = None
+node_metrics = {}
 
 def handle_node_registration():
+    global registered_node, node_metrics
     context = zmq.Context()
     socket = context.socket(zmq.REP)
-    socket.bind("tcp://192.168.0.178:5560")
-    print("[Register1] Listening for Network Node on port 5560")
+    socket.bind("tcp://192.168.0.178:5558")
 
     while True:
-        msg = socket.recv_json()
-        node_id = msg.get("node_id")
-        metrics = msg.get("metrics")
-
-        if node_id == valid_node_id:
-            registered_node[node_id] = metrics
-            print(f"[Register1] Registered Node: {node_id}, Metrics: {metrics}")
-            socket.send_json({"status": "NODE_REGISTRATION_SUCCESS"})
-            break  # Move to AI registration only after successful node reg
+        message = socket.recv_json()
+        print(f"[Register] Received node registration: {message}")
+        if message.get("node_id") == VALID_NODE_ID:
+            registered_node = VALID_NODE_ID
+            node_metrics = message.get("metrics", {})
+            socket.send_json({"status": "REGISTRATION_SUCCESS"})
+            print(f"[Register] Node {VALID_NODE_ID} registered with metrics: {node_metrics}")
         else:
-            print(f"[Register1] Invalid node ID: {node_id}")
-            socket.send_json({"status": "NODE_REGISTRATION_FAILED"})
+            socket.send_json({"status": "REGISTRATION_FAILED"})
+            print("[Register] Invalid node ID!")
 
-def handle_ai_registration_and_command():
+def handle_ai_registration():
+    global registered_ai
     context = zmq.Context()
-    ai_socket = context.socket(zmq.REP)
-    ai_socket.bind("tcp://192.168.0.178:5561")
-    print("[Register1] Listening for AI Control Engine on port 5561")
-
-    pub_socket = context.socket(zmq.PUB)
-    pub_socket.connect("tcp://192.168.0.178:5563")  # inter_ai_broker.py listens here
-    print("[Register1] Connected to inter_ai_broker PUB port 5563")
+    socket = context.socket(zmq.REP)
+    socket.bind("tcp://192.168.0.178:5559")
 
     while True:
-        message = ai_socket.recv_json()
-        ai_id = message.get("ai_id")
-
-        if ai_id == valid_ai_id and valid_node_id in registered_node:
-            print(f"[Register1] Valid AI ID: {ai_id} registered")
-            ai_socket.send_json({"status": "AI_REGISTRATION_SUCCESS"})
-
-            app_choice = input("[Register1] Enter APP to instruct (APP1/APP2): ").strip().upper()
-
-            if app_choice == "APP1":
-                pub_socket.send_string("APP1")
-                print("[Register1] Sent APP1 instruction via inter_ai_broker")
-            else:
-                pub_socket.send_string("APP2")
-                print("[Register1] Sent APP2 instruction via inter_ai_broker")
+        message = socket.recv_json()
+        print(f"[Register] Received AI registration: {message}")
+        if message.get("ai_id") == VALID_AI_ID and registered_node:
+            registered_ai = VALID_AI_ID
+            socket.send_json({"status": "AI_REGISTRATION_SUCCESS", "node_metrics": node_metrics})
+            print("[Register] AI registered and node is available.")
         else:
-            ai_socket.send_json({"status": "AI_REGISTRATION_FAILED"})
-            print("[Register1] Invalid AI ID or no node registered.")
+            socket.send_json({"status": "AI_REGISTRATION_FAILED"})
+            print("[Register] Invalid AI ID or node not present!")
 
 if __name__ == "__main__":
-    print("[Register1] Service started...")
+    print("[Register] Register service started.")
     threading.Thread(target=handle_node_registration).start()
-    threading.Thread(target=handle_ai_registration_and_command).start()
+    threading.Thread(target=handle_ai_registration).start()
