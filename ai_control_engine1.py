@@ -33,10 +33,16 @@ def send_command_to_node():
 
     while True:
         app = input("Enter APP name to run (APP1/APP2): ").strip()
-        if app in ["APP1", "APP2"]:
+        if app == "APP1":
             socket.send_string(app)
             reply = socket.recv_string()
             print(f"[AI] Node replied: {reply}")
+            pub_socket.send_string("APP1")
+        elif app == "APP2":
+            socket.send_string(app)
+            reply = socket.recv_string()
+            print(f"[AI] Node replied: {reply}")
+            pub_socket.send_string("APP2")
         else:
             print("[AI] Invalid APP name. Try again.")
 
