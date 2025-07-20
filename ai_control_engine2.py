@@ -1,41 +1,54 @@
+# ai_control_engine2.py
 import zmq
 import threading
+import time
 
 AI_ID = "AI002"
 
-def register_to_register2():
+def register_with_register2():
     context = zmq.Context()
     socket = context.socket(zmq.REQ)
-    socket.connect("tcp://192.168.0.178:5571")
-    print("[AI2] Registering to register2...")
+    socket.connect("tcp://192.168.0.178:5566")
 
+    print("[AI2] Registering with Register2...")
     socket.send_json({"ai_id": AI_ID})
     reply = socket.recv_json()
-    print(f"[AI2] Register Response: {reply}")
+    if reply.get("status") == "AI_REGISTERED":
+        print("[AI2] Successfully registered.")
+    else:
+        print("[AI2] Registration failed.")
 
-def listen_from_inter_broker():
+def listen_to_broker():
     context = zmq.Context()
     socket = context.socket(zmq.SUB)
-    socket.connect("tcp://192.168.0.178:5573")
+    socket.connect("tcp://192.168.0.178:5568")
     socket.setsockopt_string(zmq.SUBSCRIBE, "")
 
-    node_socket = context.socket(zmq.REQ)
-    node_socket.connect("tcp://192.168.0.178:5572")
-
-    print("[AI2] Listening to inter_ai_broker...")
-
     while True:
-        app_info = socket.recv_string()
-        print(f"[AI2] Received app info from inter_ai_broker: {app_info}")
-        if app_info == "APP1":
-            node_socket.send_string("APP3")
-            print(node_socket.recv_string())
-            node_socket.send_string("APP4")
-            print(node_socket.recv_string())
-        elif app_info == "APP2":
-            node_socket.send_string("APP5")
-            print(node_socket.recv_string())
+        msg = socket.recv_string()
+        print(f"[AI2] Received from broker: {msg}")
+        if msg == "APP1":
+            run_app3_and_app4()
+        else:
+            run_app5()
+
+def run_app3_and_app4():
+    print("[AI2] Running APP3 and APP4...")
+    send_command_to_node("APP3")
+    send_command_to_node("APP4")
+
+def run_app5():
+    print("[AI2] Running APP5...")
+    send_command_to_node("APP5")
+
+def send_command_to_node(command):
+    context = zmq.Context()
+    socket = context.socket(zmq.REQ)
+    socket.connect("tcp://192.168.0.178:5567")
+    socket.send_string(command)
+    reply = socket.recv_string()
+    print(f"[AI2] Node replied: {reply}")
 
 if __name__ == "__main__":
-    register_to_register2()
-    listen_from_inter_broker()
+    register_with_register2()
+    listen_to_broker()
