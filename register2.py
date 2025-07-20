@@ -1,44 +1,41 @@
+# register2.py
 import zmq
 import threading
 
 registered_nodes = {}
 valid_node_id = "N002"
-registered_ai = {}
 
 def handle_node_registration():
     context = zmq.Context()
     socket = context.socket(zmq.REP)
-    socket.bind("tcp://192.168.0.178:5570")
-    print("[Register2] Waiting for Network Node...")
+    socket.bind("tcp://192.168.0.178:5565")
+    print("[Register2] Waiting for node registration...")
 
     while True:
         message = socket.recv_json()
         node_id = message.get("node_id")
-        metrics = message.get("metrics")
         if node_id == valid_node_id:
-            registered_nodes[node_id] = metrics
-            print(f"[Register2] Registered node {node_id} with metrics {metrics}")
-            socket.send_json({"status": "NODE_REGISTERED"})
+            registered_nodes[node_id] = message.get("metrics")
+            print(f"[Register2] Registered node: {node_id} with metrics {registered_nodes[node_id]}")
+            socket.send_json({"status": "REGISTRATION_SUCCESS"})
             break
         else:
-            socket.send_json({"status": "INVALID_NODE"})
+            socket.send_json({"status": "REGISTRATION_FAILED"})
 
 def handle_ai_registration():
     context = zmq.Context()
     socket = context.socket(zmq.REP)
-    socket.bind("tcp://192.168.0.178:5571")
-    print("[Register2] Waiting for AI engine...")
+    socket.bind("tcp://192.168.0.178:5566")
+    print("[Register2] Waiting for AI engine registration...")
 
     while True:
-        message = socket.recv_json()
-        ai_id = message.get("ai_id")
-        if ai_id == "AI002":
-            registered_ai[ai_id] = True
-            print(f"[Register2] AI Engine {ai_id} registered")
+        msg = socket.recv_json()
+        if msg.get("ai_id") == "AI002":
+            print(f"[Register2] AI Engine {msg['ai_id']} registered.")
             socket.send_json({"status": "AI_REGISTERED"})
             break
         else:
-            socket.send_json({"status": "INVALID_AI"})
+            socket.send_json({"status": "AI_REGISTRATION_FAILED"})
 
 if __name__ == "__main__":
     threading.Thread(target=handle_node_registration).start()
